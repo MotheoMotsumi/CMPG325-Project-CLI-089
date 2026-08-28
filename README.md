@@ -34,10 +34,7 @@ CMPG325-2026-089-kamogelo-insurance/
 ├── 01-client-requirements/        — client brief, requirements analysis
 ├── 02-network-design/             — physical & logical topology, design rationale
 ├── 03-ip-addressing/              — VLSM addressing plan
-├── 04-packet-tracer/              — .pkt file (added once build begins)
-├── 05-configuration/              — device configs, populated at Milestone 2
-├── 06-testing-evidence/           — connectivity & challenge verification
-└── 07-reflection/                 — final project reflection
+└── 04-packet-tracer/              — .pkt file (added once build begins)
 ```
 
 ## Milestone Tracker
