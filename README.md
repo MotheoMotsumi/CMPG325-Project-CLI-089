@@ -40,8 +40,9 @@ edge routers with NAT, using floating static default routes for failover.
 │   ├── 07-cr15-dual-internet.md    ← client change request
 │   └── 08-testing-plan.md
 ├── diagrams/
-│   ├── physical-topology.svg / .png
-│   └── logical-topology.svg / .png
+│   ├── physical-topology.png                    ← Milestone 1 diagram
+│   ├── logical-topology.png                     ← Milestone 1 diagram
+│   └── implemented-topology-packet-tracer.png   ← Milestone 2 build
 ├── ip-plan/
 │   ├── ip-addressing-plan.csv      ← subnet allocation table
 │   └── device-addressing.csv       ← per-interface addressing
@@ -139,7 +140,12 @@ Screenshots are in [`evidence/screenshots/`](evidence/screenshots/), named by te
 
 ## 7. Notes and limitations
 
-- **Gateways:** the Milestone 1 address table labels the gateways "SVI". The implementation follows the Milestone 1 routing design (R3-CORE performs all inter-VLAN routing), so the gateways are router subinterfaces (`Gi0/0.10`, `.20`, `.30`, `.99`) with the same addresses.
+- **Differences from the Milestone 1 diagrams** (full table in the implementation review, Section 2.1):
+  - Routers are Cisco 2911s and the core switch is a 3650-24PS (the diagrams show a 4331 ISR and a 3560); roles are unchanged.
+  - WAN /30 host addresses: R3-CORE takes `.73` and `.77`, R1 takes `.74` and R2 takes `.78` (the logical diagram shows R1 `.73` and R2 `.77`); the subnets are unchanged.
+  - The boardroom SSID is `KAMOGELO-BOARD` (the logical diagram labels it `KIB-BOARD`).
+  - Gateways are router-on-a-stick subinterfaces on R3-CORE (`Gi0/0.10`, `.20`, `.30`, `.99`); Milestone 1 left router-on-a-stick or SVIs open and its address table labels the gateways "SVI".
+  - End devices are a representative sample: two PCs per department, two servers and three wireless clients.
 - **Beyond the Milestone 1 text:** the addressing of the two router–ISP links (outside the client block) and the boardroom isolation ACL.
 - **Failover scope:** floating static routes detect loss of the R3–R1 link or of R1, but not an ISP outage beyond R1. IP SLA / route tracking was not available in the Packet Tracer version used.
 - A single standalone AP covers the boardroom; there is no wireless LAN controller (as justified in Milestone 1).
