@@ -1,0 +1,10 @@
+Segment,VLAN,Network,Subnet mask,Prefix,Gateway,Usable range,Usable hosts,Broadcast,Assignment
+Sales / Brokers,10,192.168.40.0,255.255.255.224,/27,192.168.40.1,192.168.40.1 - 192.168.40.30,30,192.168.40.31,DHCP pool SALES (.1 excluded)
+Admin & Management,20,192.168.40.32,255.255.255.240,/28,192.168.40.33,192.168.40.33 - 192.168.40.46,14,192.168.40.47,DHCP pool ADMIN (.33 excluded)
+Boardroom,30,192.168.40.48,255.255.255.240,/28,192.168.40.49,192.168.40.49 - 192.168.40.62,14,192.168.40.63,DHCP pool BOARD (.51-.62); .49 gateway; .50 static presenter PC
+Server / Infrastructure,99,192.168.40.64,255.255.255.248,/29,192.168.40.65,192.168.40.65 - 192.168.40.70,6,192.168.40.71,"Static: File-Server .66, Print-Server .67"
+WAN Link 1 (R3-CORE to R1-EDGE-PRI),n/a,192.168.40.72,255.255.255.252,/30,n/a,192.168.40.73 - 192.168.40.74,2,192.168.40.75,"Static: R3-CORE .73, R1-EDGE-PRI .74"
+WAN Link 2 (R3-CORE to R2-EDGE-BAK),n/a,192.168.40.76,255.255.255.252,/30,n/a,192.168.40.77 - 192.168.40.78,2,192.168.40.79,"Static: R3-CORE .77, R2-EDGE-BAK .78"
+ISP-A link (R1-EDGE-PRI to ISP-A),n/a,203.0.113.0,255.255.255.252,/30,n/a,203.0.113.1 - 203.0.113.2,2,203.0.113.3,"Static: ISP-A .1, R1-EDGE-PRI .2 (outside client block)"
+ISP-B link (R2-EDGE-BAK to ISP-B),n/a,198.51.100.0,255.255.255.252,/30,n/a,198.51.100.1 - 198.51.100.2,2,198.51.100.3,"Static: ISP-B .1, R2-EDGE-BAK .2 (outside client block)"
+Unallocated (growth),n/a,192.168.40.80 onward,n/a,n/a,n/a,192.168.40.80 - 192.168.40.255,176 addresses,n/a,Not allocated

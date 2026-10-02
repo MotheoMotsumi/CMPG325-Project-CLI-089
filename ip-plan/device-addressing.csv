@@ -1,0 +1,31 @@
+Device,Interface,IP address,Subnet mask,Connected to,Notes
+R1-EDGE-PRI,Gi0/0,192.168.40.74,255.255.255.252,R3-CORE Gi0/1,NAT inside
+R1-EDGE-PRI,Gi0/1,203.0.113.2,255.255.255.252,ISP-A Gi0/0,NAT outside; default route to 203.0.113.1
+R2-EDGE-BAK,Gi0/0,192.168.40.78,255.255.255.252,R3-CORE Gi0/2,NAT inside
+R2-EDGE-BAK,Gi0/1,198.51.100.2,255.255.255.252,ISP-B Gi0/0,NAT outside; default route to 198.51.100.1
+R3-CORE,Gi0/0,none,n/a,SW1-CORE Gi1/0/1,802.1Q trunk (subinterfaces below)
+R3-CORE,Gi0/0.10,192.168.40.1,255.255.255.224,VLAN 10 Sales,Gateway; DHCP pool SALES
+R3-CORE,Gi0/0.20,192.168.40.33,255.255.255.240,VLAN 20 Admin,Gateway; DHCP pool ADMIN
+R3-CORE,Gi0/0.30,192.168.40.49,255.255.255.240,VLAN 30 Boardroom,Gateway; DHCP pool BOARD; ACL BOARD-IN inbound
+R3-CORE,Gi0/0.99,192.168.40.65,255.255.255.248,VLAN 99 Server,Gateway
+R3-CORE,Gi0/1,192.168.40.73,255.255.255.252,R1-EDGE-PRI Gi0/0,Primary default route next hop 192.168.40.74 (AD 1)
+R3-CORE,Gi0/2,192.168.40.77,255.255.255.252,R2-EDGE-BAK Gi0/0,Backup default route next hop 192.168.40.78 (AD 10)
+ISP-A,Gi0/0,203.0.113.1,255.255.255.252,R1-EDGE-PRI Gi0/1,
+ISP-A,Loopback0,8.8.8.8,255.255.255.255,n/a,Simulated Internet host
+ISP-B,Gi0/0,198.51.100.1,255.255.255.252,R2-EDGE-BAK Gi0/1,
+ISP-B,Loopback0,8.8.8.8,255.255.255.255,n/a,Simulated Internet host
+SW1-CORE,Gi1/0/1 - Gi1/0/5,none,n/a,"R3-CORE; SW2, SW3, SW4, SW5 (Gi0/1)",Trunks; no management IP configured
+SW2-SALES,Fa0/1 - Fa0/2,none,n/a,"Sales-PC1, Sales-PC2",Access VLAN 10; Gi0/1 trunk to SW1-CORE
+SW3-ADMIN,Fa0/1 - Fa0/2,none,n/a,"Admin-PC1, Admin-PC2",Access VLAN 20; Gi0/1 trunk to SW1-CORE
+SW4-BOARD,Fa0/1,none,n/a,Board-Presenter-PC,Access VLAN 30 (wired presentation port)
+SW4-BOARD,Fa0/2,none,n/a,AP1-BOARD Port 0,Access VLAN 30 (wireless presentation); Gi0/1 trunk to SW1-CORE
+SW5-SRV,Fa0/1 - Fa0/2,none,n/a,"File-Server, Print-Server",Access VLAN 99; Gi0/1 trunk to SW1-CORE
+AP1-BOARD,Port 1 (wireless),none,n/a,Wireless clients,"SSID KAMOGELO-BOARD, WPA2-PSK, AES, channel 1; Layer 2 only"
+Sales-PC1 / Sales-PC2,FastEthernet0,DHCP (192.168.40.2 / .3),255.255.255.224,SW2-SALES Fa0/1 / Fa0/2,Gateway 192.168.40.1
+Admin-PC1 / Admin-PC2,FastEthernet0,DHCP (192.168.40.34 / .35),255.255.255.240,SW3-ADMIN Fa0/1 / Fa0/2,Gateway 192.168.40.33
+Board-Presenter-PC,FastEthernet0,192.168.40.50,255.255.255.240,SW4-BOARD Fa0/1,Static; gateway 192.168.40.49
+File-Server,FastEthernet0,192.168.40.66,255.255.255.248,SW5-SRV Fa0/1,Static; gateway 192.168.40.65
+Print-Server,FastEthernet0,192.168.40.67,255.255.255.248,SW5-SRV Fa0/2,Static; gateway 192.168.40.65
+Board-Tablet,Wireless0,DHCP (192.168.40.51),255.255.255.240,AP1-BOARD,Gateway 192.168.40.49
+Board-Phone,Wireless0,DHCP (192.168.40.52),255.255.255.240,AP1-BOARD,Gateway 192.168.40.49
+Board-Laptop,Wireless0,DHCP (192.168.40.53),255.255.255.240,AP1-BOARD,Gateway 192.168.40.49
