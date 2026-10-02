@@ -1,0 +1,31 @@
+!
+! SW4-BOARD - Boardroom access switch (2960-24TT)
+! CMPG 325 Milestone 2 - Kamogelo Insurance Brokers (CLI-089)
+! Final-state configuration, written from the commands applied in Packet Tracer.
+! This is a configuration reference, not a raw "show running-config" capture.
+!
+hostname SW4-BOARD
+!
+vlan 10
+ name SALES
+vlan 20
+ name ADMIN
+vlan 30
+ name BOARDROOM
+vlan 99
+ name SERVER
+!
+interface FastEthernet0/1
+ description Wired presentation port - Board-Presenter-PC
+ switchport mode access
+ switchport access vlan 30
+!
+interface FastEthernet0/2
+ description Wireless presentation - AP1-BOARD
+ switchport mode access
+ switchport access vlan 30
+!
+interface GigabitEthernet0/1
+ switchport mode trunk
+!
+end

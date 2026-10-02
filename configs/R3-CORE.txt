@@ -1,0 +1,73 @@
+!
+! R3-CORE - inter-VLAN routing, DHCP, floating default routes, boardroom ACL
+! CMPG 325 Milestone 2 - Kamogelo Insurance Brokers (CLI-089)
+! Final-state configuration, written from the commands applied in Packet Tracer.
+! This is a configuration reference, not a raw "show running-config" capture.
+!
+hostname R3-CORE
+no ip domain-lookup
+!
+ip dhcp excluded-address 192.168.40.1
+ip dhcp excluded-address 192.168.40.33
+ip dhcp excluded-address 192.168.40.49 192.168.40.50
+!
+ip dhcp pool SALES
+ network 192.168.40.0 255.255.255.224
+ default-router 192.168.40.1
+ dns-server 8.8.8.8
+ip dhcp pool ADMIN
+ network 192.168.40.32 255.255.255.240
+ default-router 192.168.40.33
+ dns-server 8.8.8.8
+ip dhcp pool BOARD
+ network 192.168.40.48 255.255.255.240
+ default-router 192.168.40.49
+ dns-server 8.8.8.8
+!
+interface GigabitEthernet0/0
+ description Trunk to SW1-CORE
+ no ip address
+ no shutdown
+!
+interface GigabitEthernet0/0.10
+ description Gateway VLAN 10 Sales
+ encapsulation dot1Q 10
+ ip address 192.168.40.1 255.255.255.224
+!
+interface GigabitEthernet0/0.20
+ description Gateway VLAN 20 Admin
+ encapsulation dot1Q 20
+ ip address 192.168.40.33 255.255.255.240
+!
+interface GigabitEthernet0/0.30
+ description Gateway VLAN 30 Boardroom
+ encapsulation dot1Q 30
+ ip address 192.168.40.49 255.255.255.240
+ ip access-group BOARD-IN in
+!
+interface GigabitEthernet0/0.99
+ description Gateway VLAN 99 Server
+ encapsulation dot1Q 99
+ ip address 192.168.40.65 255.255.255.248
+!
+interface GigabitEthernet0/1
+ description Link to R1-EDGE-PRI
+ ip address 192.168.40.73 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to R2-EDGE-BAK
+ ip address 192.168.40.77 255.255.255.252
+ no shutdown
+!
+! Primary default route via R1 (AD 1); floating backup via R2 (AD 10)
+ip route 0.0.0.0 0.0.0.0 192.168.40.74
+ip route 0.0.0.0 0.0.0.0 192.168.40.78 10
+!
+! Boardroom isolation: boardroom to Sales and Admin denied, everything else permitted
+ip access-list extended BOARD-IN
+ deny ip 192.168.40.48 0.0.0.15 192.168.40.0 0.0.0.31
+ deny ip 192.168.40.48 0.0.0.15 192.168.40.32 0.0.0.15
+ permit ip any any
+!
+end

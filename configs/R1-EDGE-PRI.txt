@@ -1,0 +1,28 @@
+!
+! R1-EDGE-PRI - primary edge router (ISP-A), NAT overload
+! CMPG 325 Milestone 2 - Kamogelo Insurance Brokers (CLI-089)
+! Final-state configuration, written from the commands applied in Packet Tracer.
+! This is a configuration reference, not a raw "show running-config" capture.
+!
+hostname R1-EDGE-PRI
+no ip domain-lookup
+!
+interface GigabitEthernet0/0
+ description Link to R3-CORE
+ ip address 192.168.40.74 255.255.255.252
+ ip nat inside
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to ISP-A
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ no shutdown
+!
+ip nat inside source list 1 interface GigabitEthernet0/1 overload
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+ip route 192.168.40.0 255.255.255.0 192.168.40.73
+!
+access-list 1 permit 192.168.40.0 0.0.0.255
+!
+end

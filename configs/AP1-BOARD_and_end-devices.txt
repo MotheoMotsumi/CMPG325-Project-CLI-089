@@ -1,0 +1,27 @@
+AP1-BOARD and end-device settings
+CMPG 325 Milestone 2 - Kamogelo Insurance Brokers (CLI-089)
+These devices are configured in the Packet Tracer GUI, so the settings are listed here.
+
+AP1-BOARD (Access Point-PT)
+  Port 0 (wired)         : cabled to SW4-BOARD Fa0/2 (access port, VLAN 30)
+  Port 1 (wireless)      : on
+  SSID                   : KAMOGELO-BOARD
+  Authentication         : WPA2-PSK
+  Encryption             : AES
+  2.4 GHz channel        : 1
+  Passphrase             : set on the AP and every client (not recorded in this repository)
+
+Static addresses
+  Board-Presenter-PC     : 192.168.40.50  mask 255.255.255.240  gateway 192.168.40.49
+  File-Server            : 192.168.40.66  mask 255.255.255.248  gateway 192.168.40.65
+  Print-Server           : 192.168.40.67  mask 255.255.255.248  gateway 192.168.40.65
+
+DHCP clients
+  Sales-PC1, Sales-PC2   : pool SALES  (gateway 192.168.40.1)   observed .2 and .3
+  Admin-PC1, Admin-PC2   : pool ADMIN  (gateway 192.168.40.33)  observed .34 and .35
+  Board-Tablet           : pool BOARD  (gateway 192.168.40.49)  observed 192.168.40.51
+  Board-Phone            : pool BOARD  (gateway 192.168.40.49)  observed 192.168.40.52
+  Board-Laptop           : pool BOARD  (gateway 192.168.40.49)  observed 192.168.40.53
+
+Wireless clients (Board-Laptop, Board-Phone, Board-Tablet)
+  Wireless0              : SSID KAMOGELO-BOARD, WPA2-PSK, AES, IP configuration DHCP

@@ -1,0 +1,23 @@
+!
+! SW1-CORE - core switch, 802.1Q trunks (3650-24PS, Layer 2 role)
+! CMPG 325 Milestone 2 - Kamogelo Insurance Brokers (CLI-089)
+! Final-state configuration, written from the commands applied in Packet Tracer.
+! This is a configuration reference, not a raw "show running-config" capture.
+!
+hostname SW1-CORE
+!
+vlan 10
+ name SALES
+vlan 20
+ name ADMIN
+vlan 30
+ name BOARDROOM
+vlan 99
+ name SERVER
+!
+! Gi1/0/1 = uplink to R3-CORE; Gi1/0/2-5 = SW2-SALES, SW3-ADMIN, SW4-BOARD, SW5-SRV
+interface range GigabitEthernet1/0/1 - 5
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+end

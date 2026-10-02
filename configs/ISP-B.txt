@@ -1,0 +1,19 @@
+!
+! ISP-B - simulated backup ISP
+! CMPG 325 Milestone 2 - Kamogelo Insurance Brokers (CLI-089)
+! Final-state configuration, written from the commands applied in Packet Tracer.
+! This is a configuration reference, not a raw "show running-config" capture.
+!
+hostname ISP-B
+no ip domain-lookup
+!
+interface GigabitEthernet0/0
+ description Link to R2-EDGE-BAK
+ ip address 198.51.100.1 255.255.255.252
+ no shutdown
+!
+interface Loopback0
+ description Simulated Internet host
+ ip address 8.8.8.8 255.255.255.255
+!
+end
